@@ -1,58 +1,75 @@
-const button = document.getElementById("button");
+const addBook = document.getElementById("addBook");
 const test = document.getElementById("test");
-let modal = document.getElementById("myModal");
-let span = document.getElementById("close");
+const modal = document.getElementById("myModal");
+const span = document.getElementById("close");
+const fromSubmit = document.getElementById("fromSubmit");
+
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
 }
 //create div block for books
 
-let myLibrary =[];
+let myLibrary = [];
 
-function Book(name, author, title, pages, isRead){
-    this.name = name;
-    this.author = author;
-    this.title = title;
-    this.pages = pages;
-    this.isRead = isRead;
+function Book(name, author, title, pages, isRead) {
+  this.name = name;
+  this.author = author;
+  this.title = title;
+  this.pages = pages;
+  this.isRead = isRead;
 }
 
-/*Book.prototype.info = function(){
-    return `${this.name} ${this.author} ${this.title} ${this.pages} ${this.isRead}`;
+function openModal() {
+  modal.style.display = "block";
 }
+addBook.addEventListener("click", openModal);
 
-const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, "not read yet");
 
-console.log(theHobbit.info());
-*/
+function closeModal() {
+  return modal.style.display = "none";
+}
+span.addEventListener("click", closeModal);
 
 let className = "book"; //created books
 let counter = 0; //is added to every book so each one has a different class
 
-function addBookToLibrary(){
-    modal.style.display = "block";
-    let book = prompt("Enter a book name");
+function addDataToBook() {
 
-    if (book != null) {
-      myLibrary.push(book);
-      let div = document.createElement("div");
-      div.classList.add(className + counter);
-      test.appendChild(div);
+  const bName = document.getElementById("bName").value;
+  const author = document.getElementById("author").value;
+  const title = document.getElementById("title").value;
+  const pages = document.getElementById("pages").value;
+  const check = document.getElementById("check").value;
 
-      for (let index = 0; index < myLibrary.length; index++) {
-        let div = document.querySelector(`.${className}`+ counter); //gets LAST element that matches the name
-        div.textContent = myLibrary[index];
-      }
-    }
-    counter++;
+  const books = new Book(bName, author, title, pages, check);
+
+  Book.prototype.info = function () {
+    return `${this.name} ${this.author} ${this.title} ${this.pages}${this.isRead}`;
+  }
+  console.log(books.info());
+  console.log(Object.keys(books)[0]);
+
+  myLibrary.push(bName);
+
+  console.log(myLibrary);
+
+  let div = document.createElement("div");
+  div.classList.add(className + counter);
+  test.appendChild(div);
+
+  const bookArr = Object.values(books);
+  let card = document.querySelector(`.${className}` + counter); //gets LAST element that matches the name
+
+  for (let i = 0; i < Object.keys(books).length; i++) {
+    let h3 = document.createElement("h3");
+    card.appendChild(h3);
+    h3.innerText += bookArr[i];
+  }
+  counter++;
+  closeModal();
 }
 
-button.addEventListener("click", addBookToLibrary);
-span.addEventListener("click", closeModal);
-
-function closeModal(){
-    modal.style.display = "none";
-}
+fromSubmit.addEventListener("click", addDataToBook);

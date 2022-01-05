@@ -1,12 +1,14 @@
 * {
   box-sizing: border-box;
 }
-
+html, body{
+  height: 100%;
+}
 body {
   margin: 0px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  justify-content: space-between;
 }
 /*header*/
 header {
@@ -17,6 +19,7 @@ header {
 main {
   background-color: grey;
   text-align: center;
+  height: 100%;
 }
 
 #button {
