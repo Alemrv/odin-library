@@ -22,10 +22,16 @@ function Book(name, author, title, pages, isRead) {
   this.isRead = isRead;
 }
 
-Book.prototype.status = function () {
-  this.isRead = false;
-  return this.isRead;
-};
+Book.prototype.status = function(element){
+  element.addEventListener("click", ()=>{
+    if (element.innerText === "read") {
+      element.innerText = "not read"
+    }
+    else{
+      element.innerText = "read";
+    }
+  })
+}
 
 function openModal() {
   modal.style.display = "block";
@@ -40,26 +46,21 @@ span.addEventListener("click", closeModal);
 let className = "book"; //created books
 let counter = 0; //is added to every book so each one has a different class
 
+let readStatus = "status";
+
 function addDataToBook() {
   const bName = document.getElementById("bName").value;
   const author = document.getElementById("author").value;
   const title = document.getElementById("title").value;
   const pages = document.getElementById("pages").value;
-  const check = document.getElementById("check").value;
+  const check = document.getElementById("check");
 
   const books = new Book(bName, author, title, pages, check);
-
-  console.log(books.status());
-  console.log(Object.keys(books));
-
-  myLibrary.push(bName);
-
-  console.log(myLibrary);
 
   createElement("div", className + counter, test);
 
   const bookArr = Object.values(books);
-  let card = document.querySelector(`.${className}` + counter); //gets LAST element that matches the name
+  let card = document.querySelector(`.${className}` + counter); //gets First element that matches the name
 
   for (let i = 0; i < Object.keys(books).length - 1; i++) {
     let h3 = document.createElement("h3");
@@ -67,9 +68,15 @@ function addDataToBook() {
     h3.innerText += bookArr[i];
   }
 
-  createElement("button", "status", card);
-  let status = document.querySelector(".status");
-  status.innerHTML = "read";
+  createElement("button", readStatus + counter, card);
+  let status = document.querySelector(`.${readStatus}` + counter);
+
+  if (books.isRead.checked) {
+    status.innerText = "read";
+  }
+  else{
+    status.innerText = "not read"
+  }
 
   createElement("button","remove", card);
   let selectRemoveBtn = document.querySelectorAll(".remove");
@@ -79,9 +86,11 @@ function addDataToBook() {
       item.parentNode.remove(item);
     });
   });
-  counter++;
 
+  counter++;
   closeModal();
+
+  books.status(status);
 }
 
 function createElement(type, className, parent) {
