@@ -52,7 +52,7 @@ function addDataToBook() {
   const pages = document.getElementById("pages").value;
   const check = document.getElementById("check");
 
-  const book = new Book(bName, author, title, pages, check);
+  const book = new Book(bName, author, pages, check);
 
   if (myLibrary.indexOf(book.name) === -1 && book.name !== "") {
     myLibrary.push(book.name);
@@ -81,6 +81,12 @@ function addDataToBook() {
     selectRemoveBtn.forEach((item) => {
       item.innerHTML = "remove";
       item.addEventListener("click", () => {
+        for (let i = 0; i < myLibrary.length; i++) {
+          if (condition) {
+            
+          }
+          
+        }
         item.parentNode.remove(item);
       });
     });
