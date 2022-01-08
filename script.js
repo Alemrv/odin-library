@@ -10,28 +10,26 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 };
-//create div block for books
+//create div block for book
 
 let myLibrary = [];
 
-function Book(name, author, title, pages, isRead) {
+function Book(name, author, pages, isRead) {
   this.name = name;
   this.author = author;
-  this.title = title;
   this.pages = pages;
   this.isRead = isRead;
 }
 
-Book.prototype.status = function(element){
-  element.addEventListener("click", ()=>{
+Book.prototype.status = function (element) {
+  element.addEventListener("click", () => {
     if (element.innerText === "read") {
-      element.innerText = "not read"
-    }
-    else{
+      element.innerText = "not read";
+    } else {
       element.innerText = "read";
     }
-  })
-}
+  });
+};
 
 function openModal() {
   modal.style.display = "block";
@@ -43,7 +41,7 @@ function closeModal() {
 }
 span.addEventListener("click", closeModal);
 
-let className = "book"; //created books
+let className = "book"; //created book
 let counter = 0; //is added to every book so each one has a different class
 
 let readStatus = "status";
@@ -51,46 +49,55 @@ let readStatus = "status";
 function addDataToBook() {
   const bName = document.getElementById("bName").value;
   const author = document.getElementById("author").value;
-  const title = document.getElementById("title").value;
   const pages = document.getElementById("pages").value;
   const check = document.getElementById("check");
 
-  const books = new Book(bName, author, title, pages, check);
+  const book = new Book(bName, author, title, pages, check);
 
-  createElement("div", className + counter, test);
+  if (myLibrary.indexOf(book.name) === -1 && book.name !== "") {
+    myLibrary.push(book.name);
+    createElement("div", className + counter, test);
 
-  const bookArr = Object.values(books);
-  let card = document.querySelector(`.${className}` + counter); //gets First element that matches the name
+    const bookArr = Object.values(book);
+    let card = document.querySelector(`.${className}` + counter); //gets First element that matches the name
 
-  for (let i = 0; i < Object.keys(books).length - 1; i++) {
-    let h3 = document.createElement("h3");
-    card.appendChild(h3);
-    h3.innerText += bookArr[i];
-  }
+    for (let i = 0; i < Object.keys(book).length - 1; i++) {
+      let h3 = document.createElement("h3");
+      card.appendChild(h3);
+      h3.innerText += bookArr[i];
+    }
 
-  createElement("button", readStatus + counter, card);
-  let status = document.querySelector(`.${readStatus}` + counter);
+    createElement("button", readStatus + counter, card);
+    let status = document.querySelector(`.${readStatus}` + counter);
 
-  if (books.isRead.checked) {
-    status.innerText = "read";
+    if (book.isRead.checked) {
+      status.innerText = "read";
+    } else {
+      status.innerText = "not read";
+    }
+
+    createElement("button", "remove", card);
+    let selectRemoveBtn = document.querySelectorAll(".remove");
+    selectRemoveBtn.forEach((item) => {
+      item.innerHTML = "remove";
+      item.addEventListener("click", () => {
+        item.parentNode.remove(item);
+      });
+    });
+
+    counter++;
+    closeModal();
+
+    book.status(status);
   }
   else{
-    status.innerText = "not read"
+    if (condition) {
+      
+    } else {
+      
+    }
   }
-
-  createElement("button","remove", card);
-  let selectRemoveBtn = document.querySelectorAll(".remove");
-  selectRemoveBtn.forEach((item) => {
-    item.innerHTML = "remove";
-    item.addEventListener("click", () => {
-      item.parentNode.remove(item);
-    });
-  });
-
-  counter++;
-  closeModal();
-
-  books.status(status);
+  console.log(myLibrary);
 }
 
 function createElement(type, className, parent) {
