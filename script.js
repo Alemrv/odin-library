@@ -1,13 +1,15 @@
-const addBook = document.getElementById("addBook");
+const addBookBtn = document.getElementById("addBookBtn");
 const test = document.getElementById("test");
 const modal = document.getElementById("myModal");
 const span = document.getElementById("close");
 const fromSubmit = document.getElementById("fromSubmit");
+const errorMsg = document.getElementById("errorMsg");
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
+    errorMsg.style.display = "none";
   }
 };
 //create div block for book
@@ -33,8 +35,9 @@ Book.prototype.status = function (element) {
 
 function openModal() {
   modal.style.display = "block";
+  errorMsg.style.display = "none";
 }
-addBook.addEventListener("click", openModal);
+addBookBtn.addEventListener("click", openModal);
 
 function closeModal() {
   return (modal.style.display = "none");
@@ -76,35 +79,29 @@ function addDataToBook() {
       status.innerText = "not read";
     }
 
-    createElement("button", "remove", card);
-    let selectRemoveBtn = document.querySelectorAll(".remove");
-    selectRemoveBtn.forEach((item) => {
-      item.innerHTML = "remove";
-      item.addEventListener("click", () => {
-        for (let i = 0; i < myLibrary.length; i++) {
-          if (condition) {
-            
-          }
-          
-        }
-        item.parentNode.remove(item);
-      });
-    });
-
+    const remove  = document.createElement('button');
+    card.appendChild(remove);
+    remove.textContent = "Remove";
+    remove.onclick = removeBook;
     counter++;
     closeModal();
 
     book.status(status);
   }
   else{
-    if (condition) {
-      
-    } else {
-      
-    }
+    errorMsg.style.display = "block";
+    errorMsg.textContent = "this book is already in your library";
   }
-  console.log(myLibrary);
 }
+const removeBook = ((e)=>{
+  const bookTitle = e.target.parentNode.firstChild.textContent;
+  const newLib = myLibrary.filter((e)=>{
+    return e !== bookTitle;
+  })
+  myLibrary = newLib;
+  e.target.parentNode.remove(e);
+  console.log(myLibrary);
+})
 
 function createElement(type, className, parent) {
   let element = document.createElement(type);

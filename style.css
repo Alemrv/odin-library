@@ -73,6 +73,11 @@ form{
 input{
   width: 50%;
 }
+#errorMsg{
+  display: none;
+  color: red;
+  font-weight: bold;
+}
 /*footer*/
 footer {
   display: flex;
