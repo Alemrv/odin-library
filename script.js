@@ -79,7 +79,7 @@ function addDataToBook() {
       status.innerText = "not read";
     }
 
-    const remove  = document.createElement('button');
+    const remove = document.createElement("button");
     card.appendChild(remove);
     remove.textContent = "Remove";
     remove.onclick = removeBook;
@@ -87,21 +87,20 @@ function addDataToBook() {
     closeModal();
 
     book.status(status);
-  }
-  else{
+  } else {
     errorMsg.style.display = "block";
     errorMsg.textContent = "this book is already in your library";
   }
 }
-const removeBook = ((e)=>{
+const removeBook = (e) => {
   const bookTitle = e.target.parentNode.firstChild.textContent;
-  const newLib = myLibrary.filter((e)=>{
+  const newLib = myLibrary.filter((e) => {
     return e !== bookTitle;
-  })
+  });
   myLibrary = newLib;
   e.target.parentNode.remove(e);
   console.log(myLibrary);
-})
+};
 
 function createElement(type, className, parent) {
   let element = document.createElement(type);
