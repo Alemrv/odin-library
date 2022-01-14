@@ -25,23 +25,25 @@
     </header>
     <main>
       <button id="addBookBtn">New Book</button>
-      <div id="test"></div>
+      <div id="cardContainer"></div>
       <div id="myModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
           <span id="close">&times;</span>
-          <form onsubmit="return false;">
+          <form id="myForm">
             <h3>Add book</h3>
             <label for="bName">Book Title:</label>
-            <input type="text" name="bName" id="bName" />
+            <input type="text" name="bName" id="bName" required />
             <p id="errorMsg"></p>
             <label for="author">Author:</label>
-            <input type="text" name="author" id="author" />
+            <input type="text" name="author" id="author" required />
             <label for="pages">Pages:</label>
-            <input type="text" name="pages" id="pages" />
-            <label for="check">Did you read it?</label>
-            <input type="checkbox" name="check" id="check" />
-            <button id="fromSubmit">submit</button>
+            <input type="number" name="pages" id="pages" required />
+            <div>
+              <label for="check">Did you read it?</label>
+              <input type="checkbox" name="check" id="check" />
+            </div>
+            <button id="fromSubmitBtn">submit</button>
           </form>
         </div>
       </div>

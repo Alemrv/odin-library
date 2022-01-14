@@ -1,10 +1,10 @@
 const addBookBtn = document.getElementById("addBookBtn");
-const test = document.getElementById("test");
+const cardContainer = document.getElementById("cardContainer");
 const modal = document.getElementById("myModal");
 const span = document.getElementById("close");
-const fromSubmit = document.getElementById("fromSubmit");
+const fromSubmitBtn = document.getElementById("fromSubmitBtn");
 const errorMsg = document.getElementById("errorMsg");
-
+const myForm = document.getElementById("myForm");
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modal) {
@@ -25,10 +25,12 @@ function Book(name, author, pages, isRead) {
 
 Book.prototype.status = function (element) {
   element.addEventListener("click", () => {
-    if (element.innerText === "read") {
-      element.innerText = "not read";
+    if (element.innerText === "Read") {
+      element.innerText = "Not Read";
+      element.style.backgroundColor = "#011936"
     } else {
-      element.innerText = "read";
+      element.innerText = "Read";
+      element.style.backgroundColor ="#07BF7A";
     }
   });
 };
@@ -49,17 +51,16 @@ let counter = 0; //is added to every book so each one has a different class
 
 let readStatus = "status";
 
-function addDataToBook() {
+function addDataToBook(f) {
   const bName = document.getElementById("bName").value;
   const author = document.getElementById("author").value;
   const pages = document.getElementById("pages").value;
   const check = document.getElementById("check");
-
   const book = new Book(bName, author, pages, check);
 
-  if (myLibrary.indexOf(book.name) === -1 && book.name !== "") {
+  if (myLibrary.indexOf(book.name) === -1) {
     myLibrary.push(book.name);
-    createElement("div", className + counter, test);
+    createElement("div", className + counter, cardContainer);
 
     const bookArr = Object.values(book);
     let card = document.querySelector(`.${className}` + counter); //gets First element that matches the name
@@ -68,15 +69,21 @@ function addDataToBook() {
       let h3 = document.createElement("h3");
       card.appendChild(h3);
       h3.innerText += bookArr[i];
+      if (i > 1) {
+        h3.innerText = bookArr[i] + " pages";
+        console.log("hi");
+      }
     }
 
     createElement("button", readStatus + counter, card);
     let status = document.querySelector(`.${readStatus}` + counter);
 
     if (book.isRead.checked) {
-      status.innerText = "read";
+      status.innerText = "Read";
+      status.style.backgroundColor ="#07BF7A";
     } else {
-      status.innerText = "not read";
+      status.innerText = "Not Read";
+      status.style.backgroundColor = "#011936"
     }
 
     const remove = document.createElement("button");
@@ -89,7 +96,7 @@ function addDataToBook() {
     book.status(status);
   } else {
     errorMsg.style.display = "block";
-    errorMsg.textContent = "this book is already in your library";
+    errorMsg.textContent = "This book is in your library!!!";
   }
 }
 const removeBook = (e) => {
@@ -108,4 +115,11 @@ function createElement(type, className, parent) {
   parent.appendChild(element);
 }
 
-fromSubmit.addEventListener("click", addDataToBook);
+const validation = (f) =>{
+  f.preventDefault();
+  document.getElementById('myForm').checkValidity();
+  
+}
+
+myForm.onsubmit = e => e.preventDefault();
+myForm.addEventListener("submit", addDataToBook);
